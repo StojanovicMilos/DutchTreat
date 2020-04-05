@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
+using AutoMapper;
 using DutchTreat.Data;
 using DutchTreat.Services;
 using Microsoft.AspNetCore.Builder;
@@ -30,6 +32,8 @@ namespace DutchTreat
     {
         services.AddDbContext<DutchContext>(cfg => { cfg.UseSqlServer(_config.GetConnectionString("DutchConnectionString")); });
 
+        services.AddAutoMapper(Assembly.GetExecutingAssembly());
+
         services.AddTransient<DutchSeeder>();
 
         services.AddScoped<IDutchRepository, DutchRepository>();
@@ -39,11 +43,10 @@ namespace DutchTreat
 
         services.AddControllersWithViews();
 
-        services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Latest);
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
       if (env.IsDevelopment())
       {
