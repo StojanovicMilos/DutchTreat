@@ -28,24 +28,22 @@ namespace DutchTreat
     // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
     public void ConfigureServices(IServiceCollection services)
     {
-      services.AddDbContext<DutchContext>(cfg =>
-      {
-        cfg.UseSqlServer(_config.GetConnectionString("DutchConnectionString"));
-      });
+        services.AddDbContext<DutchContext>(cfg => { cfg.UseSqlServer(_config.GetConnectionString("DutchConnectionString")); });
 
-      services.AddTransient<DutchSeeder>();
+        services.AddTransient<DutchSeeder>();
 
-      services.AddScoped<IDutchRepository, DutchRepository>();
+        services.AddScoped<IDutchRepository, DutchRepository>();
 
-      services.AddTransient<IMailService, NullMailService>();
-      // Support for real mail service
+        services.AddTransient<IMailService, NullMailService>();
+        // Support for real mail service
 
-      services.AddControllersWithViews();
+        services.AddControllersWithViews();
 
+        services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Latest);
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
       if (env.IsDevelopment())
       {
